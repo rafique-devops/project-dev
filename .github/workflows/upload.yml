@@ -1,0 +1,30 @@
+name: Upload to GitHub and Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.thedevops91 }}/${{ secrets.projects-dev }}:${{ github.sha }} .
+        
+      - name: Push Docker image to Docker Hub
+        run: |
+          docker login --username ${{ secrets.thedevops91 }} --password-stdin <<< ${{ secrets.dckr_pat_d7MSbsZNyx6MMIIpWkYzLNVSka4 }}
+          docker push ${{ secrets.thedevops }}/${{ secrets.projects-dev }}:${{ github.sha }}
+
+      - name: Commit and push to GitHub
+        run: |
+          git config user.name "${{ secrets.rafique-devops }}"
+          git config user.email "${{ secrets.thedevops91@gmail.com }}"
+          git add .
+          git commit -m "Add application files"
+          git push
