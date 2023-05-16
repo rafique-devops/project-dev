@@ -18,7 +18,7 @@ jobs:
         
       - name: Push Docker image to Docker Hub
         run: |
-          docker login --username ${{ secrets.thedevops91 }} --password-stdin <<< ${{ secrets.dckr_pat_d7MSbsZNyx6MMIIpWkYzLNVSka4 }}
+          echo "${{ secrets.dckr_pat_d7MSbsZNyx6MMIIpWkYzLNVSka4 }}" | docker login --username "${{ secrets.thedevops91 }}" --password-stdin
           docker push ${{ secrets.thedevops91 }}/${{ secrets.projects-dev }}:${{ github.sha }}
 
       - name: Commit and push to GitHub
