@@ -20,11 +20,3 @@ jobs:
         run: |
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY }}:${{ github.sha }}
-
-      - name: Commit and push to GitHub
-        run: |
-          git config user.name "${{ secrets.MY_GITHUB_USERNAME }}"
-          git config user.email "${{ secrets.DOCKERHUB_EMAIL }}"
-          git add .
-          git commit -m "Add application files"
-          git push
